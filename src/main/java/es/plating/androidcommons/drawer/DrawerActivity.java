@@ -30,14 +30,25 @@ public abstract class DrawerActivity extends AppCompatActivity implements Naviga
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.inflateMenu(getDrawerMenuLayoutId());
-        showMainContent(getInitialFragment());
+        showMainContent(navigationView.getMenu().getItem(0));
     }
 
     protected abstract int getDrawerMenuLayoutId();
 
     protected abstract Fragment getInitialFragment();
 
-    private void showMainContent(Fragment fragment)
+    private void showMainContent(MenuItem item)
+    {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment fragment = getFragmentByMenuItemId(id);
+        replaceMainContent(fragment);
+
+        String fragmentTitle = item.getTitle().toString();
+        setTitle(fragmentTitle);
+    }
+
+    private void replaceMainContent(Fragment fragment)
     {
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -60,10 +71,7 @@ public abstract class DrawerActivity extends AppCompatActivity implements Naviga
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Fragment fragment = getFragmentByMenuItemId(id);
-        showMainContent(fragment);
+        showMainContent(item);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

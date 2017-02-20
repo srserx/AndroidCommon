@@ -1,5 +1,6 @@
 package es.plating.androidcommons.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +16,11 @@ import es.plating.androidcommons.BaseRecyclerAdapter;
 import es.plating.androidcommons.R;
 import es.plating.androidcommons.mvp.ISetView;
 
-public abstract class AlimentsListFragment<ViewModel> extends Fragment implements ISetView<ViewModel>
+public abstract class BaseSetView<ViewModel> extends Fragment implements ISetView<ViewModel>
 {
     private BaseRecyclerAdapter mAdapter;
 
-    public AlimentsListFragment()
+    public BaseSetView()
     {
         mAdapter = getAdapter();
     }
@@ -27,7 +28,8 @@ public abstract class AlimentsListFragment<ViewModel> extends Fragment implement
     protected abstract BaseRecyclerAdapter getAdapter();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_aliments_list, container, false);
     }
